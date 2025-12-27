@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iman Properties - Premium Property Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 2px;
+        }
+        
+        .property-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .property-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+        
+        .property-price {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px 15px;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .feature span {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer h5 {
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            color: #ccc;
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 50px;
+            padding: 10px 25px;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-home me-2"></i>Iman Properties
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#properties">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2" href="tenant_portal.html">
+                            <i class="fas fa-sign-in-alt me-2"></i>Portal Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Find Your Perfect Home</h1>
+                    <p>Discover premium properties managed with excellence. Professional property management services for landlords and tenants.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#properties" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Find Properties
+                        </a>
+                        <a href="#contact" class="btn btn-outline-light">
+                            <i class="fas fa-phone me-2"></i>Contact Us
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfMF8yNzQwXzE2MjQpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfMF8yNzQwXzE2MjQiIHgxPSIwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjMwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3RUE4Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NEJBMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=" alt="Property Management" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalProperties">50+</span>
+                        <span class="stat-label">Properties Managed</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalTenants">200+</span>
+                        <span class="stat-label">Happy Tenants</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section id="properties" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Properties</h2>
+                <p>Discover our premium property listings</p>
+            </div>
+            
+            <div class="row" id="propertiesList">
+                <!-- Properties will be loaded here -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iNDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iODAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iMTIwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTQwIiBmaWxsPSIjNjY3RUE4Ii8+CjxyZWN0IHg9IjE2MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iIzY2N0VBOCIvPgo8cmVjdCB4PSIyMDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iMjQwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTcwIiBmaWxsPSIjNjY3RUE4Ii8+CjxyZWN0IHg9IjI4MCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzY2N0VBOCIvPgo8L3N2Zz4K" alt="Property">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Modern 2BR Apartment</h5>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Westlands, Nairobi</p>
+                            <div class="property-price">KES 45,000/month</div>
+                            <p class="card-text">Beautiful 2-bedroom apartment in prime location with modern amenities and excellent facilities.</p>
+                            <div class="property-features">
+                                <div class="feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>2 BR</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>1 BA</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>85m²</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3" onclick="requestViewing('PROP001')">
+                                <i class="fas fa-calendar-check me-2"></i>Request Viewing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiM3NjRCQTIiLz4KPHJlY3QgeD0iNDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiM3NjRCQTIiLz4KPHJlY3QgeD0iODAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiM3NjRCQTIiLz4KPHJlY3QgeD0iMTIwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTQwIiBmaWxsPSIjNzY0QkEyIi8+CjxyZWN0IHg9IjE2MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iIzc2NEJBMiIvPgo8cmVjdCB4PSIyMDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiM3NjRCQTIiLz4KPHJlY3QgeD0iMjQwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTcwIiBmaWxsPSIjNzY0QkEyIi8+CjxyZWN0IHg9IjI4MCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzc2NEJBMiIvPgo8L3N2Zz4K" alt="Property">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury 3BR Villa</h5>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Kilimani, Nairobi</p>
+                            <div class="property-price">KES 75,000/month</div>
+                            <p class="card-text">Spacious 3-bedroom villa with private garden and premium amenities in a secure location.</p>
+                            <div class="property-features">
+                                <div class="feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>3 BR</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>2 BA</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>120m²</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3" onclick="requestViewing('PROP002')">
+                                <i class="fas fa-calendar-check me-2"></i>Request Viewing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="property-card">
+                        <div class="property-image">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGRjZCNkIiLz4KPHJlY3QgeD0iNDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNGRjZCNkIiLz4KPHJlY3QgeD0iODAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNGRjZCNkIiLz4KPHJlY3QgeD0iMTIwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTQwIiBmaWxsPSIjRkY2QjZCIi8+CjxyZWN0IHg9IjE2MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI0ZGNkI2QiIvPgo8cmVjdCB4PSIyMDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNGRjZCNkIiLz4KPHJlY3QgeD0iMjQwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTcwIiBmaWxsPSIjRkY2QjZCIi8+CjxyZWN0IHg9IjI4MCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI0ZGNkI2QiIvPgo8L3N2Zz4K" alt="Property">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">1BR Apartment</h5>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Upper Hill, Nairobi</p>
+                            <div class="property-price">KES 35,000/month</div>
+                            <p class="card-text">Cozy 1-bedroom apartment in central location with easy access to public transport.</p>
+                            <div class="property-features">
+                                <div class="feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>1 BR</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>1 BA</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>60m²</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3" onclick="requestViewing('PROP003')">
+                                <i class="fas fa-calendar-check me-2"></i>Request Viewing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <button class="btn btn-primary btn-lg" onclick="loadMoreProperties()">
+                    <i class="fas fa-plus me-2"></i>View More Properties
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive property management solutions</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-home fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Property Management</h5>
+                            <p class="card-text">Complete property management services including tenant screening, rent collection, and maintenance coordination.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-search fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Tenant Screening</h5>
+                            <p class="card-text">Thorough background checks and verification to ensure quality tenants for your property.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <i class="fas fa-tools fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Maintenance</h5>
+                            <p class="card-text">Prompt and professional maintenance services to keep your property in excellent condition.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Clients Say</h2>
+                <p>Feedback from our valued clients</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p>"Iman Properties made finding my perfect apartment so easy. The online portal is very user-friendly and responsive."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">MJ</div>
+                            <div>
+                                <strong>Michael J.</strong>
+                                <div class="text-muted">Tenant</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p>"As a property owner, I appreciate the transparent reporting and efficient management. My property is always well-maintained."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">SJ</div>
+                            <div>
+                                <strong>Sarah J.</strong>
+                                <div class="text-muted">Property Owner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p>"The maintenance team is responsive and professional. Any issues are resolved quickly and efficiently."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">RK</div>
+                            <div>
+                                <strong>Robert K.</strong>
+                                <div class="text-muted">Tenant</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h4 class="mb-4">Send us a message</h4>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="mb-4">Contact Information</h4>
+                            
+                            <div class="d-flex mb-4">
+                                <div class="me-3">
+                                    <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6>Address</h6>
+                                    <p class="mb-0">123 Main Street, Nairobi, Kenya</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-4">
+                                <div class="me-3">
+                                    <i class="fas fa-phone-alt fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6>Phone</h6>
+                                    <p class="mb-0">+254 712 345 678</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-4">
+                                <div class="me-3">
+                                    <i class="fas fa-envelope fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6>Email</h6>
+                                    <p class="mb-0">info@imanproperties.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <i class="fas fa-clock fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6>Working Hours</h6>
+                                    <p class="mb-0">Monday - Friday: 8:00 AM - 6:00 PM</p>
+                                    <p class="mb-0">Saturday: 9:00 AM - 2:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Iman Properties</h5>
+                    <p>Professional property management services dedicated to providing excellent experiences for both landlords and tenants.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#properties">Properties</a>
+                        <a href="#services">Services</a>
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h5>Services</h5>
+                    <div class="footer-links">
+                        <a href="#">Property Management</a>
+                        <a href="#">Tenant Screening</a>
+                        <a href="#">Maintenance</a>
+                        <a href="#">Lease Management</a>
+                        <a href="#">Financial Reporting</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe to our newsletter for property updates.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Iman Properties. All rights reserved. | Designed with <i class="fas fa-heart text-danger"></i> for property management</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // CONFIGURATION - Replace with your actual Web App URL
+        const API_URL = 'YOUR_WEB_APP_URL_HERE';
+        
+        // Navigation smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Load properties from API
+        async function loadProperties() {
+            try {
+                const response = await fetch(API_URL + '?path=public/listings');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    const properties = result.data.listings;
+                    const container = document.getElementById('propertiesList');
+                    container.innerHTML = '';
+                    
+                    properties.forEach(property => {
+                        const propertyCard = `
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="property-card">
+                                    <div class="property-image">
+                                        <img src="${property.PrimaryImage || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iNDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iODAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iMTIwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTQwIiBmaWxsPSIjNjY3RUE4Ii8+CjxyZWN0IHg9IjE2MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iIzY2N0VBOCIvPgo8cmVjdCB4PSIyMDAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiM2NjdFQTgiLz4KPHJlY3QgeD0iMjQwIiB3aWR0aD0iMzAiIGhlaWdodD0iMTcwIiBmaWxsPSIjNjY3RUE4Ii8+CjxyZWN0IHg9IjI4MCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzY2N0VBOCIvPgo8L3N2Zz4K'}" alt="${property.Title}">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">${property.Title}</h5>
+                                        <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>${property.Location}</p>
+                                        <div class="property-price">KES ${property.RentAmount?.toLocaleString() || 'TBA'}/month</div>
+                                        <p class="card-text">${property.ShortDescription}</p>
+                                        <div class="property-features">
+                                            <div class="feature">
+                                                <i class="fas fa-bed"></i>
+                                                <span>${property.Bedrooms || 'N/A'} BR</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-bath"></i>
+                                                <span>${property.Bathrooms || 'N/A'} BA</span>
+                                            </div>
+                                            <div class="feature">
+                                                <i class="fas fa-ruler-combined"></i>
+                                                <span>${property.Size || 'N/A'}m²</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary w-100 mt-3" onclick="requestViewing('${property.ListingID}')">
+                                            <i class="fas fa-calendar-check me-2"></i>Request Viewing
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += propertyCard;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading properties:', error);
+                // Show default properties if API fails
+                showDefaultProperties();
+            }
+        }
+        
+        // Show default properties if API fails
+        function showDefaultProperties() {
+            // Default properties are already in HTML
+        }
+        
+        // Request property viewing
+        async function requestViewing(propertyId) {
+            if (!confirm('Would you like to request a viewing for this property?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_URL + '?path=public/request-viewing', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        propertyId: propertyId,
+                        name: prompt('Please enter your name:'),
+                        phone: prompt('Please enter your phone number:'),
+                        email: prompt('Please enter your email:')
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Viewing request submitted successfully! We will contact you soon.');
+                } else {
+                    alert('Error: ' + (result.error?.message || 'Failed to submit request'));
+                }
+            } catch (error) {
+                alert('Error submitting request. Please try again later.');
+            }
+        }
+        
+        // Load more properties
+        function loadMoreProperties() {
+            alert('Loading more properties...');
+            // This would implement pagination in a real application
+        }
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const contactData = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(API_URL + '?path=contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(contactData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Message sent successfully! We will contact you soon.');
+                    this.reset();
+                } else {
+                    alert('Error: ' + (result.error?.message || 'Failed to send message'));
+                }
+            } catch (error) {
+                alert('Error sending message. Please try again later.');
+            }
+        });
+        
+        // Initialize the page
+        window.onload = function() {
+            // Load properties on page load
+            loadProperties();
+            
+            // Update stats with API data if available
+            updateStats();
+        };
+        
+        // Update stats with API data
+        async function updateStats() {
+            try {
+                // In a real implementation, this would fetch from API
+                // For now, we'll keep the default values
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+    </script>
+</body>
+</html>
